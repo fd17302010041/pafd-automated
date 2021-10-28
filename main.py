@@ -13,6 +13,7 @@ from PIL import Image
 from PIL import ImageEnhance
 import easyocr
 from requests import session, post, adapters
+import requests
 
 adapters.DEFAULT_RETRIES = 5
 
@@ -181,6 +182,7 @@ class Zlapp(Fudan):
         print("◉今日日期为:", today)
         if last_info["d"]["info"]["date"] == today:
             print("\n*******今日已提交*******")
+            self.close()
             return 1, position['formattedAddress'], str(last_info["d"]["info"])
         else:
             print("\n\n*******未提交*******")
@@ -314,4 +316,4 @@ if __name__ == '__main__':
             notify("提交成功，地址：{}，识别次数：{}".format(address, count), des)
         else:
             notify("提交失败，识别次数：{}".format(100), des)
-    daily_fudan.close()
+        daily_fudan.close(1)
