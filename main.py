@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2021/10/28 11:07
-# @Author  : 刘佳兴
-# @Mail    : 1260968291@qq.com
-# @FileName: T.py
 
 import json
 import time
