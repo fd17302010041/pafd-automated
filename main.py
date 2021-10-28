@@ -16,6 +16,24 @@ from PIL import ImageEnhance
 from requests import session, post, adapters
 adapters.DEFAULT_RETRIES = 5
 
+def notify(_title, _message=None):
+    if not PUSH_KEY:
+        print("未配置PUSH_KEY！")
+        return
+
+    if not _message:
+        _message = _title
+
+    print(_title)
+    print(_message)
+
+    _response = requests.post(f"https://sc.ftqq.com/{PUSH_KEY}.send", {"text": _title, "desp": _message})
+
+    if _response.status_code == 200:
+        print(f"发送通知状态：{_response.content.decode('utf-8')}")
+    else:
+        print(f"发送通知失败：{_response.status_code}")
+        
 class Fudan:
     """
     建立与复旦服务器的会话，执行登录/登出操作
@@ -160,9 +178,11 @@ class Zlapp(Fudan):
         if last_info["d"]["info"]["date"] == today:
             print("\n*******今日已提交*******")
             self.close()
+            return 1, position['formattedAddress']
         else:
             print("\n\n*******未提交*******")
             self.last_info = last_info["d"]["oldInfo"]
+            return 0, position['formattedAddress']
             
     def read_captcha(self, img_byte):
         img = Image.open(io.BytesIO(img_byte)).convert('L')
@@ -206,8 +226,8 @@ class Zlapp(Fudan):
         province = self.last_info["province"]
         city = self.last_info["city"]
         district = geo_api_info["addressComponent"].get("district", "")
-        
-        while(True):
+        count = 0
+        while(count < 100):
             print("◉正在识别验证码......")
             code = self.validate_code()
             print("◉验证码为:", code)
@@ -233,9 +253,12 @@ class Zlapp(Fudan):
             save_msg = json_loads(save.text)["m"]
             print(save_msg, '\n\n')
             time.sleep(0.1)
+            count += 1
             if(json_loads(save.text)["e"] != 1):
-                break
-
+                return count
+        else:
+            return count
+        
 def get_account():
     """
     获取账号信息
@@ -279,8 +302,13 @@ if __name__ == '__main__':
                         url_login=zlapp_login, url_code=code_url)
     daily_fudan.login()
 
-    daily_fudan.check()
-    daily_fudan.checkin()
-    # 再检查一遍
-    daily_fudan.check()
+    submit, address = daily_fudan.check()
+    if submit:
+        notify("今日已提交，地址：{}".format(address)
+    else:
+        count = daily_fudan.checkin()
+        if count >= 0:
+            notify("提交成功，地址：{}，识别次数：{}".format(address,count)    
+        else:
+            notify("提交失败，识别次数：{}".format(count)                      
     daily_fudan.close(1)
