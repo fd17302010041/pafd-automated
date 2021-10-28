@@ -1,4 +1,3 @@
-
 import json
 import time
 import os
@@ -260,7 +259,7 @@ class Zlapp(Fudan):
             if (json_loads(save.text)["e"] != 1):
                 return count, str(self.last_info)
         else:
-            return count, ""
+            return -1, ""
 
 
 def get_account():
@@ -298,7 +297,6 @@ def get_account():
 
 if __name__ == '__main__':
     uid, psw = get_account()
-    print(uid, psw)
     zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
                   'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
     code_url = "https://zlapp.fudan.edu.cn/backend/default/code"
@@ -313,5 +311,5 @@ if __name__ == '__main__':
         if count >= 0:
             notify("提交成功，地址：{}，识别次数：{}".format(address, count), des)
         else:
-            notify("提交失败，识别次数：{}".format(count), des)
+            notify("提交失败，识别次数：{}".format(100), des)
         daily_fudan.close(1)
