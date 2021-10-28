@@ -13,18 +13,18 @@ from sys import exit as sys_exit
 from getpass import getpass
 import re
 import base64
-import easyocr
 import io
 import numpy
 from PIL import Image
 from PIL import ImageEnhance
-
+import easyocr
 from requests import session, post, adapters
 
 adapters.DEFAULT_RETRIES = 5
 
 
 def notify(_title, _message=None):
+    PUSH_KEY = getenv("PUSH_KEY")
     if not PUSH_KEY:
         print("未配置PUSH_KEY！")
         return
@@ -303,7 +303,7 @@ def get_account():
 
 if __name__ == '__main__':
     uid, psw = get_account()
-    # print(uid, psw)
+    print(uid, psw)
     zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
                   'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
     code_url = "https://zlapp.fudan.edu.cn/backend/default/code"
