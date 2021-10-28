@@ -19,6 +19,7 @@ adapters.DEFAULT_RETRIES = 5
 
 def notify(_title, _message=None):
     PUSH_KEY = getenv("PUSH_KEY")
+    print(PUSH_KEY)
     if not PUSH_KEY:
         print("未配置PUSH_KEY！")
         return
@@ -305,8 +306,10 @@ if __name__ == '__main__':
     daily_fudan.login()
     submit, address, des = daily_fudan.check()
     if submit:
+        print("\n\n◉◉推送")
         notify("今日已提交，地址：{}".format(address), des)
     else:
+        print("\n\n◉◉推送")
         count, des = daily_fudan.checkin()
         if count >= 0:
             notify("提交成功，地址：{}，识别次数：{}".format(address, count), des)
