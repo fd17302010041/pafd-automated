@@ -1,3 +1,4 @@
+
 import json
 import time
 import os
@@ -13,7 +14,6 @@ from PIL import Image
 from PIL import ImageEnhance
 import easyocr
 from requests import session, post, adapters
-import requests
 
 adapters.DEFAULT_RETRIES = 5
 
@@ -31,7 +31,7 @@ def notify(_title, _message=None):
     print(_title)
     print(_message)
 
-    _response = requests.post(f"https://sc.ftqq.com/{PUSH_KEY}.send", {"text": _title, "desp": _message})
+    _response = post(f"https://sc.ftqq.com/{PUSH_KEY}.send", {"text": _title, "desp": _message})
 
     if _response.status_code == 200:
         print(f"发送通知状态：{_response.content.decode('utf-8')}")
@@ -182,7 +182,6 @@ class Zlapp(Fudan):
         print("◉今日日期为:", today)
         if last_info["d"]["info"]["date"] == today:
             print("\n*******今日已提交*******")
-            self.close()
             return 1, position['formattedAddress'], str(last_info["d"]["info"])
         else:
             print("\n\n*******未提交*******")
