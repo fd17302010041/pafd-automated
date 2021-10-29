@@ -314,4 +314,4 @@ if __name__ == '__main__':
             notify("提交成功，识别次数：{}，地址：{}，".format(address, count), des)
         else:
             notify("提交失败，识别次数：{}".format(10), des)
-        daily_fudan.close()
+    daily_fudan.close()
