@@ -311,7 +311,7 @@ if __name__ == '__main__':
         print("\n\n◉◉推送")
         count, des = daily_fudan.checkin()
         if count >= 0:
-            notify("提交成功，识别次数：{}，地址：{}，".format(address, count), des)
+            notify("提交成功，识别次数：{}，地址：{}，".format(count, address), des)
         else:
             notify("提交失败，识别次数：{}".format(10), des)
     daily_fudan.close()
