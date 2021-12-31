@@ -195,16 +195,18 @@ class Zlapp(Fudan):
 
         image = numpy.array(new_img)
         reader = easyocr.Reader(['en'])
-        horizontal_list, free_list = reader.detect(image, optimal_num_chars=4)
-        character = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        allow_list = list(character)
-        allow_list.extend(list(character.lower()))
+        results = reader.readtext(image)
+        return ''.join([c[1] for c in resulsts])
+#         horizontal_list, free_list = reader.detect(image, optimal_num_chars=4)
+#         character = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+#         allow_list = list(character)
+#         allow_list.extend(list(character.lower()))
 
-        result = reader.recognize(image,
-                                  allowlist=allow_list,
-                                  horizontal_list=horizontal_list[0],
-                                  free_list=free_list[0],
-                                  detail=1)
+#         result = reader.recognize(image,
+#                                   allowlist=allow_list,
+#                                   horizontal_list=horizontal_list[0],
+#                                   free_list=free_list[0],
+#                                   detail=1)
         return result[0]
 
     def validate_code(self):
