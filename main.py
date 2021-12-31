@@ -14,6 +14,8 @@ from PIL import Image
 from PIL import ImageEnhance
 import easyocr
 from requests import session, post, adapters
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 adapters.DEFAULT_RETRIES = 5
 
