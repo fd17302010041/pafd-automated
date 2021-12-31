@@ -204,7 +204,7 @@ class Zlapp(Fudan):
                                   allowlist=allow_list,
                                   horizontal_list=horizontal_list[0],
                                   free_list=free_list[0],
-                                  detail=0)
+                                  detail=`)
         return result[0]
 
     def validate_code(self):
