@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install easyocr==1.4.1 pillow numpy requests opencv-python==4.5.4.60
+          pip install easyocr==1.4.1 pillow numpy requests==2.18.1 opencv-python==4.5.4.60
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
       - name: run
