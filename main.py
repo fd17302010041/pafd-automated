@@ -298,21 +298,5 @@ def get_account():
 
 if __name__ == '__main__':
     uid, psw = get_account()
-    zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
-                  'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
-    code_url = "https://zlapp.fudan.edu.cn/backend/default/code"
-    daily_fudan = Zlapp(uid, psw,
-                        url_login=zlapp_login, url_code=code_url)
-    daily_fudan.login()
-    submit, address, des = daily_fudan.check()
-    if submit:
-        print("\n\n◉◉推送")
-        notify("今日已提交，地址：{}".format(address), des)
-    else:
-        print("\n\n◉◉推送")
-        count, des = daily_fudan.checkin()
-        if count >= 0:
-            notify("提交成功，识别次数：{}，地址：{}，".format(count, address), des)
-        else:
-            notify("提交失败，识别次数：{}".format(10), des)
-    daily_fudan.close()
+    infor = "链接：https://pan.baidu.com/s/1xGL1PRm-mmvbEiBmR_hFhw 提取码：7ble "
+    notify("段旭昶与刘佳兴的照片，共勉！", infor)
